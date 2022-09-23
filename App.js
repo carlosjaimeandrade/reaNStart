@@ -23,8 +23,6 @@ const Btn = styled.View`
   }
 `;
 
-
-
 const Input = styled.TextInput`
   width: 100%;
   border: 1px solid;
@@ -60,8 +58,6 @@ const Label = styled.Text`
   color: #fff;
 `;
 
-
-
 const Hello = (props) => {
 
   const [name, setName] = useState('Bonieky');
@@ -73,8 +69,9 @@ const Hello = (props) => {
 
 export default () => {
 
-  const [nome, setNome] = useState('Carlos');
+  const [nome, setNome] = useState('carlos');
   const [idade, setIdade] = useState('52');
+  const [mostrar, setMostrar] = useState(false);
 
   const mudaNome = (nome) =>{
     setNome(nome)
@@ -82,6 +79,10 @@ export default () => {
 
   const mudaIdade = (idade) =>{
     setIdade(idade)
+  }
+
+  const mostrarQuadrado = () => {
+    setMostrar(!mostrar)
   }
 
   return (
@@ -95,14 +96,15 @@ export default () => {
       <Input value={idade} onChangeText={mudaIdade} placeholder="Insira a idade" keyboardType="numeric"  ></Input>
 
   
-      <TouchableNativeFeedback>
-          <Btn onPress={() => alert('cool')} ><Label size="25">Entrar</Label></Btn>
+      <TouchableNativeFeedback onPress={() => alert(nome)} >
+          <Btn><Label size="25">Entrar</Label></Btn>
       </TouchableNativeFeedback>
 
-      <Button title="Cancelar"></Button>
+      <Button onPress={() => alert(`${nome} ${idade}`)} title="Canlando"></Button>
 
+      <Button onPress={mostrarQuadrado} title={mostrar ? "Ocultar" : "Mostrar"} ></Button>
 
-
+      {mostrar &&
       <Header>
         <Quadrado cor="red"></Quadrado>
         <Quadrado cor="blue"></Quadrado>
@@ -114,6 +116,8 @@ export default () => {
         <Quadrado cor="blue"></Quadrado>
         <Quadrado cor="red"></Quadrado>
       </Header>
+      }
+
     </Page>
  
   )
