@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components/native'
-import {View, SafeAreaView, Text, Button, TouchableNativeFeedback } from 'react-native'
+import {View, SafeAreaView, Text, Button, TouchableNativeFeedback, KeyboardAvoidingView, Platform } from 'react-native'
 
 
 const Page = styled.SafeAreaView`
@@ -85,40 +85,46 @@ export default () => {
     setMostrar(!mostrar)
   }
 
+  useEffect(()=>{
+    alert(Platform.OS)
+  },[]);
+
   return (
     <Page>
-      <Hello frase="Seja bem vindo"></Hello>
+      <KeyboardAvoidingView behavior='padding'>
+        <Hello frase="Seja bem vindo"></Hello>
 
-      <P>Nome: {nome}</P>
-      <Input value={nome} onChangeText={mudaNome} placeholder="useless placeholder"  keyboardType="text"></Input>
+        <P>Nome: {nome}</P>
+        <Input value={nome} onChangeText={mudaNome} placeholder="useless placeholder"  keyboardType="text"></Input>
 
-      <P>Idade: {idade}</P>
-      <Input value={idade} onChangeText={mudaIdade} placeholder="Insira a idade" keyboardType="numeric"  ></Input>
+        <P>Idade: {idade}</P>
+        <Input value={idade} onChangeText={mudaIdade} placeholder="Insira a idade" keyboardType="numeric"  ></Input>
 
-  
-      <TouchableNativeFeedback onPress={() => alert(nome)} >
-          <Btn><Label size="25">Entrar</Label></Btn>
-      </TouchableNativeFeedback>
+    
+        <TouchableNativeFeedback onPress={() => alert(nome)} >
+            <Btn><Label size="25">Entrar</Label></Btn>
+        </TouchableNativeFeedback>
 
-      <Button onPress={() => alert(`${nome} ${idade}`)} title="Canlando"></Button>
+        <Button onPress={() => alert(`${nome} ${idade}`)} title="Canlando"></Button>
 
-      <Button onPress={mostrarQuadrado} title={mostrar ? "Ocultar" : "Mostrar"} ></Button>
+        <Button onPress={mostrarQuadrado} title={mostrar ? "Ocultar" : "Mostrar"} ></Button>
 
-      {mostrar &&
-      <Header>
-        <Quadrado cor="red"></Quadrado>
-        <Quadrado cor="blue"></Quadrado>
-        <Quadrado cor="red"></Quadrado>
-        <Quadrado cor="red"></Quadrado>
-        <Quadrado cor="blue"></Quadrado>
-        <Quadrado cor="red"></Quadrado>
-        <Quadrado cor="red"></Quadrado>
-        <Quadrado cor="blue"></Quadrado>
-        <Quadrado cor="red"></Quadrado>
-      </Header>
-      }
-
+        {mostrar &&
+        <Header>
+          <Quadrado cor="red"></Quadrado>
+          <Quadrado cor="blue"></Quadrado>
+          <Quadrado cor="red"></Quadrado>
+          <Quadrado cor="red"></Quadrado>
+          <Quadrado cor="blue"></Quadrado>
+          <Quadrado cor="red"></Quadrado>
+          <Quadrado cor="red"></Quadrado>
+          <Quadrado cor="blue"></Quadrado>
+          <Quadrado cor="red"></Quadrado>
+        </Header>
+        }
+        
+        <Input value={nome} onChangeText={mudaNome} placeholder="useless placeholder"  keyboardType="text"></Input>
+      </KeyboardAvoidingView>
     </Page>
- 
   )
 }
