@@ -1,124 +1,122 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, StatusBar, FlatList} from 'react';
 import styled from 'styled-components/native'
 import {View, SafeAreaView, Text, Button, TouchableNativeFeedback } from 'react-native'
 
 
 const Page = styled.SafeAreaView`
-  background-Color: #fff;
-  height: 100%;
+  flex: 1;
+  align-items: center
 `;
 
-const Btn = styled.View`
-  background-color: blue;
-  border-radius: 3px;
-  width: 100%;
-  padding: 10px;
-  color: #fff;
-  border-radius: 50px;
-  border: 1px solid black
-  margin-top: 10px
-  font-size: 32px
-  text-align: center
-  background-color: red;
-  }
-`;
+const HeaderText = styled.Text`
+  font-size: 25px;
+  margin-top: 15px;
+  color: #000
+`
 
 const Input = styled.TextInput`
-  width: 100%;
-  border: 1px solid;
+  width: 90%;
+  background-color: #EEE;
+  font-size: 20px
+  padding: 20px
+  margin-top: 15px;
+  border-radius: 10px;
+`
+const CalcButton = styled.Button`
+  margin-top: 15px;
+  width: 90%;
+`;
+
+const ResultArea = styled.View`
+  width: 90%;
+  background-color: #EEE;
   padding: 20px;
-  background-color: #eee;
-  color: black;
-  font-size: 30px;
-`;
-
-const Header = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  background-Color: #EEE;
-  height: 200px;
+`
+const PercentualArea = styled.View`
+  width: 100%;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
   flex-wrap: wrap;
+`
+const PercentualAreaItem = styled.Button`
+  margin: 5px
 `;
 
-const Quadrado = styled.View`
-  width: 50px;
-  height: 50px;
-  background-color: ${props=>props.cor};
-  margin: 15px;
-`;
+const ResultAreaText = styled.Text`
+  width: 100%;
+  margin-top: 10px;
+  font-size: 20px
+  background-color: #EEE;
+  justify-content: center;
+  align-items: center;
+`
 
-const P = styled.Text`
-  font-size: 30px;
-`;
-
-const Label = styled.Text`
-  font-size: ${props=>props.size}px;
-  text-align: center;
-  color: #fff;
-`;
-
-const Hello = (props) => {
-
-  const [name, setName] = useState('Bonieky');
-  
-  return (
-    <P>{props.frase} {name}</P>
-  )
-}
+const ResultAreaTextItem = styled.Text`
+  width: 100%;
+  font-size: 20px
+  font-weight: bold;
+  background-color: #EEE;
+`
 
 export default () => {
 
-  const [nome, setNome] = useState('carlos');
-  const [idade, setIdade] = useState('52');
-  const [mostrar, setMostrar] = useState(false);
+  const [bill, setBill] = useState("");
+  const [tip, setTip] = useState(0);
+  const [pct, setPct] = useState(10);
 
-  const mudaNome = (nome) =>{
-    setNome(nome)
+  const calc = (valor) =>{
+    let billN = parseFloat(bill)
+
+    setTip((pct * billN)/100)
   }
 
-  const mudaIdade = (idade) =>{
-    setIdade(idade)
-  }
-
-  const mostrarQuadrado = () => {
-    setMostrar(!mostrar)
-  }
+  useEffect(()=>{
+    calc()
+  },[bill, pct]);
 
   return (
     <Page>
-      <Hello frase="Seja bem vindo"></Hello>
-
-      <P>Nome: {nome}</P>
-      <Input value={nome} onChangeText={mudaNome} placeholder="useless placeholder"  keyboardType="text"></Input>
-
-      <P>Idade: {idade}</P>
-      <Input value={idade} onChangeText={mudaIdade} placeholder="Insira a idade" keyboardType="numeric"  ></Input>
-
-  
-      <TouchableNativeFeedback onPress={() => alert(nome)} >
-          <Btn><Label size="25">Entrar</Label></Btn>
-      </TouchableNativeFeedback>
-
-      <Button onPress={() => alert(`${nome} ${idade}`)} title="Canlando"></Button>
-
-      <Button onPress={mostrarQuadrado} title={mostrar ? "Ocultar" : "Mostrar"} ></Button>
-
-      {mostrar &&
-      <Header>
-        <Quadrado cor="red"></Quadrado>
-        <Quadrado cor="blue"></Quadrado>
-        <Quadrado cor="red"></Quadrado>
-        <Quadrado cor="red"></Quadrado>
-        <Quadrado cor="blue"></Quadrado>
-        <Quadrado cor="red"></Quadrado>
-        <Quadrado cor="red"></Quadrado>
-        <Quadrado cor="blue"></Quadrado>
-        <Quadrado cor="red"></Quadrado>
-      </Header>
-      }
-
-    </Page>
  
+      <HeaderText>Calculadora de Gorjeta</HeaderText>
+      <Input 
+        value={bill}
+        placeholder="Quanto deu a conta"
+        placeholderTextColor="#000"
+        keyboardType="numeric"
+        onChangeText={bill=>setBill(bill)}
+      />
+
+      <PercentualArea>
+        <PercentualAreaItem onPress={()=>setPct(10)} title="10%"></PercentualAreaItem>
+        <PercentualAreaItem onPress={()=>setPct(20)} title="20%"></PercentualAreaItem>
+        <PercentualAreaItem onPress={()=>setPct(30)} title="30%"></PercentualAreaItem>
+        <PercentualAreaItem onPress={()=>setPct(40)} title="40%"></PercentualAreaItem>
+        <PercentualAreaItem onPress={()=>setPct(50)}title="50%"></PercentualAreaItem>
+        <PercentualAreaItem onPress={()=>setPct(60)} title="60%"></PercentualAreaItem>
+      </PercentualArea>
+      
+      <ResultArea>
+        <ResultAreaText>Calcular: </ResultAreaText>
+        <ResultAreaTextItem>{pct}%</ResultAreaTextItem>
+      </ResultArea>
+
+      {/* <CalcButton title="Calcular" onPress={calc} /> */}
+      {bill > 0 &&
+        <ResultArea>
+          <ResultAreaText>Valor da conta: </ResultAreaText>
+          <ResultAreaTextItem>{parseFloat(bill).toFixed(2)}</ResultAreaTextItem>
+
+          <ResultAreaText>Valor da Gorjeta {pct}%: </ResultAreaText>
+          <ResultAreaTextItem>{parseFloat(tip).toFixed(2)}</ResultAreaTextItem>
+
+          <ResultAreaText>Valor total:</ResultAreaText>
+          <ResultAreaTextItem>{parseFloat(bill) + tip}</ResultAreaTextItem>
+        </ResultArea>
+      }
+    </Page>
   )
 }
