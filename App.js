@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/native'
-import {View, SafeAreaView, Text, Button, TouchableNativeFeedback, KeyboardAvoidingView, Platform } from 'react-native'
+import { View, SafeAreaView, Text, Button, TouchableNativeFeedback, Dimensions, Alert } from 'react-native'
 
 
 const Page = styled.SafeAreaView`
@@ -44,7 +44,7 @@ const Header = styled.View`
 const Quadrado = styled.View`
   width: 50px;
   height: 50px;
-  background-color: ${props=>props.cor};
+  background-color: ${props => props.cor};
   margin: 15px;
 `;
 
@@ -53,7 +53,7 @@ const P = styled.Text`
 `;
 
 const Label = styled.Text`
-  font-size: ${props=>props.size}px;
+  font-size: ${props => props.size}px;
   text-align: center;
   color: #fff;
 `;
@@ -61,7 +61,7 @@ const Label = styled.Text`
 const Hello = (props) => {
 
   const [name, setName] = useState('Bonieky');
-  
+
   return (
     <P>{props.frase} {name}</P>
   )
@@ -73,11 +73,11 @@ export default () => {
   const [idade, setIdade] = useState('52');
   const [mostrar, setMostrar] = useState(false);
 
-  const mudaNome = (nome) =>{
+  const mudaNome = (nome) => {
     setNome(nome)
   }
 
-  const mudaIdade = (idade) =>{
+  const mudaIdade = (idade) => {
     setIdade(idade)
   }
 
@@ -85,31 +85,48 @@ export default () => {
     setMostrar(!mostrar)
   }
 
-  useEffect(()=>{
-    alert(Platform.OS)
-  },[]);
+  useEffect(() => {
+
+    //pegando dimensão do android https://reactnative.dev/docs/dimensions
+    var { height, width } = Dimensions.get('window');
+
+    // mensagem com botões personalizado com callback https://reactnative.dev/docs/alert#android
+    Alert.alert(
+      "Alert Title",
+      "My Alert Msg",
+      [
+        {
+          text: "Cancel",
+          onPress: () => Alert.alert("Cancel Pressed"),
+        },
+        {
+          text: "ok",
+          onPress: () => Alert.alert("ok Pressed"),
+        }
+      ]
+    );
+  }, []);
 
   return (
     <Page>
-      <KeyboardAvoidingView behavior='padding'>
-        <Hello frase="Seja bem vindo"></Hello>
+      <Hello frase="Seja bem vindo"></Hello>
 
-        <P>Nome: {nome}</P>
-        <Input value={nome} onChangeText={mudaNome} placeholder="useless placeholder"  keyboardType="text"></Input>
+      <P>Nome: {nome}</P>
+      <Input value={nome} onChangeText={mudaNome} placeholder="useless placeholder" keyboardType="text"></Input>
 
-        <P>Idade: {idade}</P>
-        <Input value={idade} onChangeText={mudaIdade} placeholder="Insira a idade" keyboardType="numeric"  ></Input>
+      <P>Idade: {idade}</P>
+      <Input value={idade} onChangeText={mudaIdade} placeholder="Insira a idade" keyboardType="numeric"  ></Input>
 
-    
-        <TouchableNativeFeedback onPress={() => alert(nome)} >
-            <Btn><Label size="25">Entrar</Label></Btn>
-        </TouchableNativeFeedback>
 
-        <Button onPress={() => alert(`${nome} ${idade}`)} title="Canlando"></Button>
+      <TouchableNativeFeedback onPress={() => alert(nome)} >
+        <Btn><Label size="25">Entrar</Label></Btn>
+      </TouchableNativeFeedback>
 
-        <Button onPress={mostrarQuadrado} title={mostrar ? "Ocultar" : "Mostrar"} ></Button>
+      <Button onPress={() => alert(`${nome} ${idade}`)} title="Canlando"></Button>
 
-        {mostrar &&
+      <Button onPress={mostrarQuadrado} title={mostrar ? "Ocultar" : "Mostrar"} ></Button>
+
+      {mostrar &&
         <Header>
           <Quadrado cor="red"></Quadrado>
           <Quadrado cor="blue"></Quadrado>
@@ -121,10 +138,9 @@ export default () => {
           <Quadrado cor="blue"></Quadrado>
           <Quadrado cor="red"></Quadrado>
         </Header>
-        }
-        
-        <Input value={nome} onChangeText={mudaNome} placeholder="useless placeholder"  keyboardType="text"></Input>
-      </KeyboardAvoidingView>
+      }
+
     </Page>
+
   )
 }
