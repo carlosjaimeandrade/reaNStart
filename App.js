@@ -5,23 +5,30 @@ import styled from 'styled-components/native'
 import  lista  from "./src/lista"
 
 
-const Item = styled.View`
+const Item = styled.TouchableOpacity`
   padding: 10px;
   margin: 10px;
   background-color: red;
 `;
 
+const BtnLight = styled.TouchableHighlight`
+  background-color: blue;
+  padding: 10px;
+  color: #fff;
+`;
+
 const ItemText = styled.Text`
-  font-size: 15px;
+  font-size: 25px;
 `;
 
 export default () => {
   return (
     <NativeBaseProvider>
       <ScrollView>
+      <BtnLight underlayColor="red" onPress={()=>{}}><Text>Clique aqui</Text></BtnLight>
       { lista.map((item, index) => {
         return (
-          <Item key={index}>
+          <Item key={index} activeOpacity={0.8}>
             <ItemText>{item.task}</ItemText>
           </Item>
         );
