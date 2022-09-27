@@ -4,11 +4,16 @@ import { View, Text, FlatList } from "react-native";
 import styled from 'styled-components/native'
 import lista  from "./src/lista"
 import Listagem from "./src/components/Listagem"
-
+import AddArea from "./src/components/AddArea"
 
 export default () => {
+
+  const [items, setItems] = useState(lista);
+
+
   return (
     <NativeBaseProvider>
+      <AddArea items={items} setItems={setItems} />
       <FlatList 
         data={lista}
         renderItem={({item})=><Listagem data={item} />}
