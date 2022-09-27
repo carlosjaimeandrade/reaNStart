@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text} from 'react-native';
 import styled from 'styled-components';
 
+
 const Header = styled.View`
     flex-direction: row;
     width: 100%;
