@@ -18,7 +18,7 @@ const BtnLight = styled.TouchableHighlight`
 `;
 
 const ItemText = styled.Text`
-  font-size: 15px;
+  font-size: 25px;
 `;
 
 export default () => {
