@@ -11,9 +11,19 @@ export default () => {
   const [items, setItems] = useState(lista);
 
 
+  const editando = (novoValor) =>{
+    const id = Math.floor(Math.random() * 1111 + 6666)
+    items.unshift({id:id , task: novoValor, done: false})
+    if(!novoValor.trim()){
+        alert('por favor preencha o campo')
+    }
+    setItems(items)
+}
+
+
   return (
     <NativeBaseProvider>
-      <AddArea items={items} setItems={setItems} />
+      <AddArea data={editando} />
       <FlatList 
         data={lista}
         renderItem={({item})=><Listagem data={item} />}

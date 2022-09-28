@@ -29,18 +29,12 @@ export default (props) => {
 
     const [novoValor, setNovoValor] = useState('');
 
-
-    const editando = () =>{
-        const id = Math.floor(Math.random() * 1111 + 6666)
-        const items = props.items;
-        items.unshift({id:id , task: novoValor, done: false})
-        if(!novoValor.trim()){
-            alert('por favor preencha o campo')
-        }
-        props.setItems(items)
+    const enviando = () => {
+        props.data(novoValor)
         setNovoValor('')
     }
 
+    
     return (
         <Area>
             <InputArea>
@@ -49,7 +43,7 @@ export default (props) => {
                 placeholder="Teste" 
                 value={novoValor}
                 onChangeText={e=>setNovoValor(e)}
-                onSubmitEditing={editando}
+                onSubmitEditing={enviando}
                 returnKeyType="send"
                 />
             </InputArea>
