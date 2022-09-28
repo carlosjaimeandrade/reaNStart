@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, Text, Image} from 'react-native';
+import { View, Text, Image, TouchableHighlight} from 'react-native';
 import styled from 'styled-components';
 
-const ListItem = styled.View`
+const ListItem = styled.TouchableHighlight`
     flex-direction: row;
-    padding: 20px;
+    padding: 0px 20px;
     margin: 10px;
+    height: 130px;
     background-color: #3FAAFF;
     border-radius: 10px
     justify-content: space-between;
@@ -27,15 +28,30 @@ const Img = styled.Image`
     margin-left: 10px;
 `;
 
+const Check = styled.View`
+    width: 20px;
+    height: 20px;
+    border-radius: 100px;
+    background-color: ${(props)=>props.color};
+`
 
 export default (props) => {
+
+    const checking = () =>{
+        props.check(props.data)
+    }
+    
     return (
-        <ListItem>
-            <View>
-                <Img resizeMode="cover" source={require('../images/logo.jpg')} />
-                <TextItem>Descrição</TextItem>
-            </View>
-            <TextItem>{props.data.task}</TextItem>
+    
+        <ListItem activeOpacity={1} underlayColor="#3FAAAD" onPress={()=>checking()}>
+            <>
+                <View>
+                    <Img resizeMode="cover" source={require('../images/logo.jpg')} />
+                    <TextItem>Descrição</TextItem>
+                </View>
+                <TextItem>{props.data.task}</TextItem>
+                <Check color={props.data.done == false ? "#fff" : "green"} />
+            </>
         </ListItem>
     )
 }

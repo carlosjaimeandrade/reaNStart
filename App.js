@@ -5,6 +5,8 @@ import styled from 'styled-components/native'
 import lista  from "./src/lista"
 import Listagem from "./src/components/Listagem"
 import AddArea from "./src/components/AddArea"
+import { SwipeListView } from 'react-native-swipe-list-view';
+import ListagemSwipe from "./src/components/ListagemSwipe"
 
 export default () => {
 
@@ -16,17 +18,40 @@ export default () => {
     items.unshift({id:id , task: novoValor, done: false})
     if(!novoValor.trim()){
         alert('por favor preencha o campo')
-    }
-    setItems(items)
-}
+        return;
+    }else {
+      setItems(items)
+    }   
+  }
 
+  const checking = (values) =>{
+    
+    const newValue = items.map(element => {
+      if(element.id === values.id){
+        element.done = !values.done
+      }
+      return element
+    })
+
+    setItems(newValue)
+  
+  }
+  
+  const destroy = (index) => {
+    let newValue = items.filter((element,i) =>i != index)
+
+    setItems(newValue)
+  }
 
   return (
     <NativeBaseProvider>
-      <AddArea data={editando} />
-      <FlatList 
-        data={lista}
-        renderItem={({item})=><Listagem data={item} />}
+      <AddArea data={editando}  />
+      <SwipeListView 
+        data={items}
+        renderItem={({item})=><Listagem data={item} check={checking}/>}
+        renderHiddenItem={({item, index})=><ListagemSwipe data={index} deletando={destroy} />}
+        leftOpenValue={100}
+        disableLeftSwipe={true}
         keyExtractor={item=>item.id}
       />
     </NativeBaseProvider>
