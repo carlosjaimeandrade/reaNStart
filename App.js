@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, NativeBaseProvider, Spinner, TouchableHighlight } from "native-base";
+import { Button, NativeBaseProvider, Spinner, TouchableHighlight, StatusBar } from "native-base";
 import { View, Text, FlatList, Modal } from "react-native";
 import styled from 'styled-components/native'
 import lista  from "./src/lista"
@@ -83,6 +83,10 @@ export default () => {
 
   return (
     <NativeBaseProvider>
+      <StatusBar 
+        barStyle="light-content"
+        backgroundColor="#3FAAFF"
+      />
       <Btn title="abrir menu" onPress={()=> setModal(!modal)} />
       <AddArea data={editando}  />
       <SwipeListView 
