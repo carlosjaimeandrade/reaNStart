@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Button, NativeBaseProvider, Spinner } from "native-base";
-import { View, Text, FlatList } from "react-native";
+import { Button, NativeBaseProvider, Spinner, TouchableHighlight } from "native-base";
+import { View, Text, FlatList, Modal } from "react-native";
 import styled from 'styled-components/native'
 import lista  from "./src/lista"
 import Listagem from "./src/components/Listagem"
@@ -8,10 +8,48 @@ import AddArea from "./src/components/AddArea"
 import { SwipeListView } from 'react-native-swipe-list-view';
 import ListagemSwipe from "./src/components/ListagemSwipe"
 
+const MenuContainer = styled.View`
+  width: 100%;
+  height: 100%;
+  flex-direction: row;
+  align-items: flex-end;
+`;
+
+const MenuContent = styled.View`
+  width: 100%;
+  height: 70%;
+  background-color: #3FAAFF;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  flex-direction: row;
+  justify-content: flex-end;
+  border: 1px solid #3FAAAD;
+`;
+
+const Btn = styled.Button`
+  font-size: 20px
+`;
+
+const BtnClose = styled.TouchableHighlight`
+  margin: 20px;
+  height: 60px;
+  width: 60px;
+  border-radius: 100px;
+  background-color: #fff;
+  flex-direction: row;
+  align-items center;
+  justify-content: center;
+`
+
+const BtnCloseIcon = styled.Text`
+  font-size: 35px
+  color: black;
+`
+
 export default () => {
 
   const [items, setItems] = useState(lista);
-
+  const [modal, setModal] = useState(false)
 
   const editando = (novoValor) =>{
     const id = Math.floor(Math.random() * 1111 + 6666)
@@ -45,6 +83,7 @@ export default () => {
 
   return (
     <NativeBaseProvider>
+      <Btn title="abrir menu" onPress={()=> setModal(!modal)} />
       <AddArea data={editando}  />
       <SwipeListView 
         data={items}
@@ -54,6 +93,20 @@ export default () => {
         disableLeftSwipe={true}
         keyExtractor={item=>item.id}
       />
+
+      <Modal
+        visible={modal}
+        animationType="slide"
+        transparent={true}
+      >
+        <MenuContainer>
+          <MenuContent>
+            <BtnClose underlayColor="#3FAAAD"  onPress={()=> setModal(!modal)}>
+              <BtnCloseIcon>x</BtnCloseIcon>
+            </BtnClose>
+          </MenuContent>
+        </MenuContainer>
+      </Modal>
     </NativeBaseProvider>
       
   )
