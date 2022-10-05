@@ -1,9 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 function AboutScreen(){
     const navigation = useNavigation();
+    const route = useRoute();
 
     const home = () =>{
         //navigation.goBack(); // volta para pagina anterior
@@ -14,7 +15,7 @@ function AboutScreen(){
 
     return (
         <View style={styles.container}>
-            <Text>tela about</Text>
+            <Text>tela about {route.params?.name}</Text>
             <Button title="Ir para tela Home" onPress={home}></Button>
         </View>
     )
