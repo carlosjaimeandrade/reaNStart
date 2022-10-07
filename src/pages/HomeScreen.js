@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { View, Text, StyleSheet, Button, TextInput } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 
@@ -6,11 +6,26 @@ function HomeScreen(props){
     const navigation = useNavigation();
 
     const [name, setName] = useState('');
+    const [count, setCount] = useState(0);
+
+    useLayoutEffect(()=>{
+        navigation.setOptions({
+            title: count
+        })
+    },[count]);
 
     const enviarSobre = () => {
-        navigation.navigate('About',{
-            name
+        navigation.setOptions({
+            title: name,
+            headerStyle:{
+                backgroundColor: 'blue'
+            }
         })
+
+
+        // navigation.navigate('About',{
+        //     name
+        // })
     }
 
     return (
@@ -18,6 +33,7 @@ function HomeScreen(props){
             <Text>Qual seu nome? {name}</Text>
             <TextInput value={name} onChangeText={e=>setName(e)} style={styles.input} />
             <Button title="Enviar" onPress={enviarSobre}></Button>
+            <Button title="Mais 1" onPress={()=>setCount(count+1)}></Button>
         </View>
     )
 }

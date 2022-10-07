@@ -17,24 +17,8 @@ export default () =>{
                 color: '#fff'
             }
         }}>
-            <MainStack.Screen name="Home" component={HomeScreen} options={{
-                title: "Inicio",
-                headerTitleAlign: "center",
-                headerStyle:{
-                    backgroundColor: 'red'
-                },
-                headerTitleStyle:{
-                    fontSize: 20,
-                    color: '#fff'
-                }
-            }}/>
-            <MainStack.Screen name="About" component={AboutScreen} options={{
-                title: "sobre",
-                headerBackTitle: "Voltar",
-                headerBackTitleStyle: {
-                    color: "#fff"
-                }
-            }} />
+            <MainStack.Screen name="Home" component={HomeScreen} />
+            <MainStack.Screen name="About" component={AboutScreen} />
         </MainStack.Navigator>
     )
 }
