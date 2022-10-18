@@ -14,6 +14,7 @@ function HomeScreen(props){
         })
     },[count]);
 
+    // podemos usar o setOption para alterar a barra de navegação no aplicativo adicionando ate mesmo botões adicionando a propriedade headerRight
     const enviarSobre = () => {
         navigation.setOptions({
             title: name,
@@ -23,6 +24,7 @@ function HomeScreen(props){
         })
 
 
+ 
         // navigation.navigate('About',{
         //     name
         // })
