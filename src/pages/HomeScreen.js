@@ -23,11 +23,9 @@ function HomeScreen(props){
             }
         })
 
-
- 
         // navigation.navigate('About',{
         //     name
-        // })
+        // })  
     }
 
     return (
