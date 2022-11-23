@@ -11,11 +11,27 @@ function CustomTabBar({state, descriptors, navigation}) {
                //let label = route.name;
                 let label = options.tabBarLabel
 
-                return (
-                    <TouchableHighlight style={styles.tab} key={index}>
-                        <Text style={styles.label}>{label}</Text>
-                    </TouchableHighlight>
-                );
+
+                const handleTabPress = () => {
+                    navigation.navigate(route.name)
+                }
+
+                const isFocused = state.index == index;
+
+                if(route.name == "TabHome"){
+                    return(
+                        <TouchableHighlight underlayColor="transparent" onPress={handleTabPress} style={styles.middleTab} key={index}>
+                            <Text style={isFocused ? styles.labelFocused : styles.label}>{label}</Text>
+                        </TouchableHighlight>
+                    );
+                }else{
+                    return (
+                        <TouchableHighlight underlayColor="transparent" onPress={handleTabPress} style={styles.tab} key={index}>
+                            <Text style={isFocused ? styles.labelFocused : styles.label}>{label}</Text>
+                        </TouchableHighlight>
+                    );
+                }
+   
             })}
         </View>
     );
@@ -23,17 +39,29 @@ function CustomTabBar({state, descriptors, navigation}) {
 
 const styles = StyleSheet.create({
     container:{
-        flexDirection: 'row',
-        height: 60
+        flexDirection: 'row'
     },
     tab:{
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 10
+        height: 60       
+    },
+    middleTab:{
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 70,
+        width: 70,
+        backgroundColor: '#d7d7db',
+        marginTop: -10,
+        borderRadius: 50
     },
     label:{
         fontSize: 16,
+        color: 'black'
+    },
+    labelFocused:{
+        fontSize: 19,
         color: 'black'
     }
 })
